@@ -37,6 +37,7 @@
       <HintPath>..\..\packages\DomainValidation.1.0.0\lib\net453\DomainValidation.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
@@ -47,15 +48,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationService.cs" />
+    <Compile Include="AutoMapper\AutoMapperConfig.cs" />
+    <Compile Include="AutoMapper\DomainToViewModelMappingProfile.cs" />
+    <Compile Include="AutoMapper\ViewModelToDomainMappingProfile.cs" />
+    <Compile Include="CustomerAppService.cs" />
+    <Compile Include="Interfaces\ICustomerAppService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\CustomerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="AutoMapper\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="ViewModels\" />
+    <ProjectReference Include="..\Taking.Domain\Taking.Domain.csproj">
+      <Project>{d3d8d5e1-6746-4bf4-965f-b32c31049c6d}</Project>
+      <Name>Taking.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Taking.Infra.CrossCutting.Filters\Taking.Infra.CrossCutting.Filters.csproj">
+      <Project>{188736ec-db38-42bd-bde6-d36ea5d328ee}</Project>
+      <Name>Taking.Infra.CrossCutting.Filters</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Taking.Infra.Data\Taking.Infra.Data.csproj">
+      <Project>{e4a499cc-a5b4-4848-a270-52324bc712ac}</Project>
+      <Name>Taking.Infra.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
