@@ -7,8 +7,6 @@ using Taking.Application.ViewModels;
 
 namespace Taking.UI.Controllers
 {
-    //[RoutePrefix("Adm/Gestao/Customer")]
-    //[Route("{action=listar-clientes}")]
     public class CustomerController : Controller
     {
         private readonly ICustomerAppService _customerAppService;
@@ -19,14 +17,12 @@ namespace Taking.UI.Controllers
         }
 
         // GET: Customer
-        //[Route("listar-clientes")]
         public ActionResult Index()
         {
             return View(_customerAppService.ObterTodos());
         }
 
         // GET: Customer/Details/5
-        //[Route("detalhes/{id:guid}")]
         public ActionResult Details(Guid? id)
         {
             if (id == null)
