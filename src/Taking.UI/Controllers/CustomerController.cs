@@ -1,31 +1,39 @@
-﻿using System;
-using System.Data.Entity;
-using System.Linq;
+﻿using Microsoft.Ajax.Utilities;
+using System;
 using System.Net;
 using System.Web.Mvc;
+using Taking.Application.Interfaces;
 using Taking.Application.ViewModels;
-using Taking.UI.Models;
 
 namespace Taking.UI.Controllers
 {
+    //[RoutePrefix("Adm/Gestao/Customer")]
+    //[Route("{action=listar-clientes}")]
     public class CustomerController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ICustomerAppService _customerAppService;
+
+        public CustomerController(ICustomerAppService customerAppService)
+        {
+            _customerAppService = customerAppService;
+        }
 
         // GET: Customer
+        //[Route("listar-clientes")]
         public ActionResult Index()
         {
-            return View(db.CustomerViewModels.ToList());
+            return View(_customerAppService.ObterTodos());
         }
 
         // GET: Customer/Details/5
+        //[Route("detalhes/{id:guid}")]
         public ActionResult Details(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CustomerViewModel customerViewModel = db.CustomerViewModels.Find(id);
+            CustomerViewModel customerViewModel = _customerAppService.ObterPorId(id.Value);
             if (customerViewModel == null)
             {
                 return HttpNotFound();
@@ -34,6 +42,7 @@ namespace Taking.UI.Controllers
         }
 
         // GET: Customer/Create
+        //[Route("incluir-novo")]
         public ActionResult Create()
         {
             return View();
@@ -42,15 +51,30 @@ namespace Taking.UI.Controllers
         // POST: Customer/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[Route("incluir-novo")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CustomerId,Name,Email,CPF,BirthDate,Status")] CustomerViewModel customerViewModel)
+        public ActionResult Create(CustomerViewModel customerViewModel)
         {
             if (ModelState.IsValid)
             {
-                customerViewModel.CustomerId = Guid.NewGuid();
-                db.CustomerViewModels.Add(customerViewModel);
-                db.SaveChanges();
+                customerViewModel = _customerAppService.Adicionar(customerViewModel);
+
+                if (!customerViewModel.ValidationResult.IsValid)
+                {
+                    foreach (var erro in customerViewModel.ValidationResult.Erros)
+                    {
+                        ModelState.AddModelError(string.Empty, erro.Message);
+                    }
+                    return View(customerViewModel);
+                }
+
+                if (!customerViewModel.ValidationResult.Message.IsNullOrWhiteSpace())
+                {
+                    ViewBag.Sucesso = customerViewModel.ValidationResult.Message;
+                    return View(customerViewModel);
+                }
+
                 return RedirectToAction("Index");
             }
 
@@ -58,44 +82,48 @@ namespace Taking.UI.Controllers
         }
 
         // GET: Customer/Edit/5
+        //[Route("editar/{id:guid}")]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CustomerViewModel customerViewModel = db.CustomerViewModels.Find(id);
+            CustomerViewModel customerViewModel = _customerAppService.ObterPorId(id.Value);
             if (customerViewModel == null)
             {
                 return HttpNotFound();
             }
+
+            ViewBag.CustomerId = id;
             return View(customerViewModel);
         }
 
         // POST: Customer/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[Route("editar/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CustomerId,Name,Email,CPF,BirthDate,Status")] CustomerViewModel customerViewModel)
+        public ActionResult Edit(CustomerViewModel customerViewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(customerViewModel).State = EntityState.Modified;
-                db.SaveChanges();
+                _customerAppService.Atualizar(customerViewModel);
                 return RedirectToAction("Index");
             }
             return View(customerViewModel);
         }
 
         // GET: Customer/Delete/5
+        //[Route("excluir/{id:guid}")]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CustomerViewModel customerViewModel = db.CustomerViewModels.Find(id);
+            CustomerViewModel customerViewModel = _customerAppService.ObterPorId(id.Value);
             if (customerViewModel == null)
             {
                 return HttpNotFound();
@@ -104,13 +132,12 @@ namespace Taking.UI.Controllers
         }
 
         // POST: Customer/Delete/5
+        //[Route("excluir/{id:guid}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            CustomerViewModel customerViewModel = db.CustomerViewModels.Find(id);
-            db.CustomerViewModels.Remove(customerViewModel);
-            db.SaveChanges();
+            _customerAppService.Remover(id);
             return RedirectToAction("Index");
         }
 
@@ -118,7 +145,7 @@ namespace Taking.UI.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _customerAppService.Dispose();
             }
             base.Dispose(disposing);
         }

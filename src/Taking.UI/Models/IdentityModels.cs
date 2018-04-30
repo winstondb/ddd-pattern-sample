@@ -27,7 +27,6 @@ namespace Taking.UI.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<Taking.Application.ViewModels.CustomerViewModel> CustomerViewModels { get; set; }
     }
 
 }

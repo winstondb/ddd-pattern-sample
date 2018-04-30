@@ -6,6 +6,7 @@ namespace Taking.Application.Interfaces
 {
     public interface ICustomerAppService : IDisposable
     {
+        CustomerViewModel Adicionar(CustomerViewModel customerViewModel);
         CustomerViewModel ObterPorId(Guid id);
         CustomerViewModel ObterPorCpf(string cpf);
         CustomerViewModel ObterPorEmail(string email);

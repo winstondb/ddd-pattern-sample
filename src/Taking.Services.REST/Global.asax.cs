@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
 using Taking.Application.AutoMapper;
 
-namespace Taking.Service.REST
+namespace Taking.Services.REST
 {
     public class WebApiApplication : System.Web.HttpApplication
     {

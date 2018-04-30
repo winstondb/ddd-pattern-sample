@@ -7,7 +7,7 @@ using Taking.Domain.Entities;
 using Taking.Domain.Interfaces.Service;
 using Taking.Infra.Data.Interfaces;
 
-namespace Taking.Application
+namespace Taking.Application.Service
 {
     public class CustomerAppService : ApplicationService, ICustomerAppService
     {
@@ -17,6 +17,25 @@ namespace Taking.Application
             : base(uow)
         {
             _customerService = customerService;
+        }
+
+        public CustomerViewModel Adicionar(CustomerViewModel customerViewModel)
+        {
+            var customer = Mapper.Map<CustomerViewModel, Customer>(customerViewModel);
+
+            BeginTransaction();
+
+            var customerReturn = _customerService.Adicionar(customer);
+            customerViewModel = Mapper.Map<Customer, CustomerViewModel>(customerReturn);
+            if (!customerReturn.ValidationResult.IsValid)
+            {
+                // Não faz o commit
+                return customerViewModel;
+            }
+
+            Commit();
+
+            return customerViewModel;
         }
 
         public CustomerViewModel ObterPorId(Guid id)
@@ -59,5 +78,6 @@ namespace Taking.Application
             _customerService.Dispose();
             GC.SuppressFinalize(this);
         }
+
     }
 }

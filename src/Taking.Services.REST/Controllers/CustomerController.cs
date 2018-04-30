@@ -15,30 +15,30 @@ namespace Taking.Services.REST.Controllers
             _customerAppService = customerAppService;
         }
 
-        // GET: api/Customers
+        // GET: api/Customer
         [HttpGet]
         public IEnumerable<CustomerViewModel> ListarTodos()
         {
             return _customerAppService.ObterTodos();
         }
 
-        // GET: api/Customers/5
+        // GET: api/Customer/5
         public CustomerViewModel Get(Guid id)
         {
             return _customerAppService.ObterPorId(id);
         }
 
-        // POST: api/Customers
+        // POST: api/Customer
         public void Post([FromBody]string value)
         {
         }
 
-        // PUT: api/Customers/5
+        // PUT: api/Customer/5
         public void Put(int id, [FromBody]string value)
         {
         }
 
-        // DELETE: api/Customers/5
+        // DELETE: api/Customer/5
         public void Delete(int id)
         {
         }

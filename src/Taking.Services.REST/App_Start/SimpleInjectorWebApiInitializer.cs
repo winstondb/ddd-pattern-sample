@@ -1,12 +1,14 @@
-﻿using SimpleInjector;
+using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
+using SimpleInjector.Lifestyles;
 using System.Web.Http;
 using Taking.Infra.CrossCutting.IoC;
-using Taking.Services.REST;
+using Taking.Services.REST.App_Start;
+using WebActivator;
 
-[assembly: WebActivatorEx.PostApplicationStartMethod(typeof(SimpleInjectorWebApiInitializer), "Initialize")]
+[assembly: PostApplicationStartMethod(typeof(SimpleInjectorWebApiInitializer), "Initialize")]
 
-namespace Taking.Services.REST
+namespace Taking.Services.REST.App_Start
 {
     public static class SimpleInjectorWebApiInitializer
     {
@@ -14,7 +16,7 @@ namespace Taking.Services.REST
         public static void Initialize()
         {
             var container = new Container();
-            container.Options.DefaultScopedLifestyle = new WebApiRequestLifestyle();
+            container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 
             InitializeContainer(container);
 

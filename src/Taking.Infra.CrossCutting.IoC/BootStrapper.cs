@@ -1,5 +1,5 @@
 ﻿using SimpleInjector;
-using Taking.Application;
+using Taking.Application.Service;
 using Taking.Application.Interfaces;
 using Taking.Domain.Interfaces.Repository;
 using Taking.Domain.Interfaces.Service;
@@ -20,15 +20,15 @@ namespace Taking.Infra.CrossCutting.IoC
             // Lifestyle.Scoped => Uma instancia unica para o request
 
             // App
-            container.Register<ICustomerAppService, CustomerAppService>();
+            container.Register<ICustomerAppService, CustomerAppService>(Lifestyle.Scoped);
 
             // Domain
-            container.Register<ICustomerService, CustomerService>();
+            container.Register<ICustomerService, CustomerService>(Lifestyle.Scoped);
 
             // Infra Dados
-            container.Register<ICustomerRepository, CustomerRepository>();
-            container.Register<IUnitOfWork, UnitOfWork>();
-            container.Register<TakingContext>();
+            container.Register<ICustomerRepository, CustomerRepository>(Lifestyle.Scoped);
+            container.Register<IUnitOfWork, UnitOfWork>(Lifestyle.Scoped);
+            container.Register<TakingContext>(Lifestyle.Scoped);
 
         }
     }

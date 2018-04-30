@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Http;
 
-namespace Taking.Service.REST
+namespace Taking.Services.REST
 {
     public static class WebApiConfig
     {

@@ -1,6 +1,6 @@
 ﻿using Taking.Infra.Data.Interfaces;
 
-namespace Taking.Application
+namespace Taking.Application.Service
 {
     public class ApplicationService
     {
