@@ -31,6 +31,8 @@ namespace Taking.Infra.Data.EntityConfig
             Property(c => c.Status)
                 .IsRequired();
 
+            Ignore(c => c.ValidationResult);
+
             ToTable("Customers");
         }
     }
