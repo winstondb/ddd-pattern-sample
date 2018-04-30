@@ -1,5 +1,6 @@
 ﻿using DomainValidation.Validation;
 using System;
+using Taking.Domain.Validations.CustomerValidations;
 
 namespace Taking.Domain.Entities
 {
@@ -20,6 +21,7 @@ namespace Taking.Domain.Entities
 
         public bool IsValid()
         {
+            ValidationResult = new CustomerIsConsistent().Validate(this);
             return ValidationResult.IsValid;
         }
     }

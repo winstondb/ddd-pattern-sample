@@ -38,7 +38,6 @@ namespace Taking.UI.Controllers
         }
 
         // GET: Customer/Create
-        //[Route("incluir-novo")]
         public ActionResult Create()
         {
             return View();
@@ -47,7 +46,6 @@ namespace Taking.UI.Controllers
         // POST: Customer/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[Route("incluir-novo")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CustomerViewModel customerViewModel)
@@ -65,11 +63,11 @@ namespace Taking.UI.Controllers
                     return View(customerViewModel);
                 }
 
-                if (!customerViewModel.ValidationResult.Message.IsNullOrWhiteSpace())
-                {
-                    ViewBag.Sucesso = customerViewModel.ValidationResult.Message;
-                    return View(customerViewModel);
-                }
+                //if (!customerViewModel.ValidationResult.Message.IsNullOrWhiteSpace())
+                //{
+                //    ViewBag.Sucesso = customerViewModel.ValidationResult.Message;
+                //    return View(customerViewModel);
+                //}
 
                 return RedirectToAction("Index");
             }
@@ -78,7 +76,6 @@ namespace Taking.UI.Controllers
         }
 
         // GET: Customer/Edit/5
-        //[Route("editar/{id:guid}")]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -98,7 +95,6 @@ namespace Taking.UI.Controllers
         // POST: Customer/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[Route("editar/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(CustomerViewModel customerViewModel)
@@ -112,7 +108,6 @@ namespace Taking.UI.Controllers
         }
 
         // GET: Customer/Delete/5
-        //[Route("excluir/{id:guid}")]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -128,7 +123,6 @@ namespace Taking.UI.Controllers
         }
 
         // POST: Customer/Delete/5
-        //[Route("excluir/{id:guid}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)

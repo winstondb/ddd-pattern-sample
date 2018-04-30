@@ -42,12 +42,12 @@
     <Compile Include="Interfaces\Service\ICustomerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CustomerService.cs" />
+    <Compile Include="Specifications\CustomerSpecifications\CustomerMustHaveUniqueCPFSpecification.cs" />
+    <Compile Include="Specifications\CustomerSpecifications\CustomerMustHaveValidCPFSpecification.cs" />
+    <Compile Include="Validations\CustomerValidations\CustomerIsConsistent.cs" />
+    <Compile Include="Validations\Document\CPFValidation.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Specifications\" />
-    <Folder Include="Validations\Costumer\" />
-    <Folder Include="Validations\Document\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
