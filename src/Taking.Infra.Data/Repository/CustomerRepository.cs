@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Dapper;
 using Taking.Domain.Entities;
 using Taking.Domain.Interfaces.Repository;
 using Taking.Infra.Data.Context;

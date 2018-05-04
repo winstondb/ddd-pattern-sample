@@ -1,6 +1,5 @@
 ﻿using DomainValidation.Validation;
 using Taking.Domain.Entities;
-using Taking.Domain.Interfaces.Repository;
 using Taking.Domain.Specifications.CustomerSpecifications;
 
 namespace Taking.Domain.Validations.CustomerValidations

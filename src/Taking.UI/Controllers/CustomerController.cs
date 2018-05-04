@@ -63,12 +63,6 @@ namespace Taking.UI.Controllers
                     return View(customerViewModel);
                 }
 
-                //if (!customerViewModel.ValidationResult.Message.IsNullOrWhiteSpace())
-                //{
-                //    ViewBag.Sucesso = customerViewModel.ValidationResult.Message;
-                //    return View(customerViewModel);
-                //}
-
                 return RedirectToAction("Index");
             }
 
